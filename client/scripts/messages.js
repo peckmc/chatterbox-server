@@ -1,5 +1,6 @@
-var Messages = {
+var _ = require("underscore");
 
+var Messages = {
 
   _data: {},
 
@@ -32,5 +33,7 @@ var Messages = {
     message.roomname = message.roomname || '';
     return message;
   }
-  
+
 };
+
+module.exports.items = Messages.items;
