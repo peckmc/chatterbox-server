@@ -16,6 +16,7 @@
     "underscore": "^1.11.0"
   },
   "scripts": {
+    "watch": "nodemon --watch server server/basic-server.js",
     "start:server": "node server/basic-server.js",
     "start:client": "npx live-server",
     "test": "mocha server/spec",
