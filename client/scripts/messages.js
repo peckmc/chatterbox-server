@@ -37,3 +37,4 @@ var Messages = {
 };
 
 module.exports.items = Messages.items;
+module.exports.add = Messages.add;

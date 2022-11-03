@@ -44,6 +44,7 @@ describe('server', function() {
       uri: 'http://127.0.0.1:3000/classes/messages',
       json: {
         username: 'Jono',
+        // message_id: '',
         text: 'Do my bidding!'}
     };
 

@@ -1,3 +1,5 @@
+// var $ = require('jquery');
+
 var Parse = {
 
   server: `http://127.0.0.1:3000/classes/messages`,
@@ -29,3 +31,5 @@ var Parse = {
   }
 
 };
+module.exports.create = Parse.create;
+module.exports.readAll = Parse.readAll;

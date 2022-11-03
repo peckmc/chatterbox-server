@@ -19,6 +19,7 @@
     "watch": "nodemon --watch server server/basic-server.js",
     "start:server": "node server/basic-server.js",
     "start:client": "npx live-server",
+    "debug": "node --inspect server/basic-server.js",
     "test": "mocha server/spec",
     "lint": "eslint ./"
   },
