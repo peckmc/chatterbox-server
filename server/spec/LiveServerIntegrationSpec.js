@@ -1,7 +1,55 @@
 var request = require('request');
 var expect = require('chai').expect;
+var handler = require('../request-handler');
 
 describe('server', function() {
+
+  it('Should answer OPTIONS requests for /classes/messages with a 200 status code', function(done) {
+    request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
+      expect(response.statusCode).to.equal(200);
+      done();
+    });
+  });
+
+  it('Should display methods for OPTIONS requests', function(done) {
+    request({method: 'OPTIONS',
+    uri: 'http://127.0.0.1:3000/classes/messages',
+    }, function(error, response, body) {
+
+      expect(response.statusCode).to.equal(200);
+      expect(response.body).to.equal('Allow: GET, POST, OPTIONS');
+      done();
+    });
+  });
+
+  it('Should use CORS headers for all method types', function(done) {
+    request({method: 'POST',
+      uri: 'http://127.0.0.1:3000/classes/messages',
+      json: {
+        username: 'Jono',
+        text: 'Do my bidding!'}
+    }, function(error, response, body) {
+      response.headers['access-control-max-age'] = JSON.parse(response.headers['access-control-max-age']);
+      expect(response.headers).to.include(handler.defaultCorsHeaders);
+
+    });
+
+    request({method: 'GET',
+    uri: 'http://127.0.0.1:3000/classes/messages',
+    }, function(error, response, body) {
+      response.headers['access-control-max-age'] = JSON.parse(response.headers['access-control-max-age']);
+      expect(response.headers).to.include(handler.defaultCorsHeaders);
+    });
+
+    request({method: 'OPTIONS',
+    uri: 'http://127.0.0.1:3000/classes/messages',
+    }, function(error, response, body) {
+      response.headers['access-control-max-age'] = JSON.parse(response.headers['access-control-max-age']);
+      expect(response.headers).to.include(handler.defaultCorsHeaders);
+    });
+
+    done();
+  })
 
   it('should respond to GET requests for /classes/messages with a 200 status code', function(done) {
     request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
@@ -65,6 +113,4 @@ describe('server', function() {
       done();
     });
   });
-
-
 });

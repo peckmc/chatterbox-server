@@ -2,7 +2,7 @@ var handler = require('../request-handler');
 var expect = require('chai').expect;
 var stubs = require('./Stubs');
 
-describe.only('Custom Tests', function() {
+describe('Node Server Request Listener Function', function() {
   it('Should answer OPTIONS requests for /classes/messages with a 200 status code', function() {
     var req = new stubs.request('/classes/messages', 'OPTIONS');
     var res = new stubs.response();
@@ -22,7 +22,7 @@ describe.only('Custom Tests', function() {
 
   it('Should use CORS headers for all method types', function() {
     var postReq = new stubs.request('/classes/messages', 'POST', {
-      username: 'Test User',
+      username: 'Jono',
       text: 'Do my bidding!'
     });
     var getReq = new stubs.request('/classes/messages', 'GET');
@@ -39,9 +39,7 @@ describe.only('Custom Tests', function() {
     expect(getRes._headers).to.include(handler.defaultCorsHeaders);
     expect(optionsRes._headers).to.include(handler.defaultCorsHeaders);
   })
-});
 
-describe('Node Server Request Listener Function', function() {
   it('Should answer GET requests for /classes/messages with a 200 status code', function() {
     // This is a fake server request. Normally, the server would provide this,
     // but we want to test our function's behavior totally independent of the server code
