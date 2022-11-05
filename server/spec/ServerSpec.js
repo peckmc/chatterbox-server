@@ -31,7 +31,6 @@ describe.only('Custom Tests', function() {
     var postRes = new stubs.response();
     var getRes = new stubs.response();
     var optionsRes = new stubs.response();
-
     handler.requestHandler(postReq, postRes);
     handler.requestHandler(getReq, getRes);
     handler.requestHandler(optionsReq, optionsRes);
