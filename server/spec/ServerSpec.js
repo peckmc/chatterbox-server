@@ -2,6 +2,46 @@ var handler = require('../request-handler');
 var expect = require('chai').expect;
 var stubs = require('./Stubs');
 
+describe.only('Custom Tests', function() {
+  it('Should answer OPTIONS requests for /classes/messages with a 200 status code', function() {
+    var req = new stubs.request('/classes/messages', 'OPTIONS');
+    var res = new stubs.response();
+    handler.requestHandler(req, res);
+
+    expect(res._responseCode).to.equal(200);
+    expect(res._ended).to.equal(true);
+  });
+
+  it('Should display methods for OPTIONS requests', function() {
+    var req = new stubs.request('/classes/messages', 'OPTIONS');
+    var res = new stubs.response();
+    handler.requestHandler(req, res);
+
+    expect(res._data).to.equal('Allow: GET, POST, OPTIONS');
+  });
+
+  it('Should use CORS headers for all method types', function() {
+    var postReq = new stubs.request('/classes/messages', 'POST', {
+      username: 'Test User',
+      text: 'Do my bidding!'
+    });
+    var getReq = new stubs.request('/classes/messages', 'GET');
+    var optionsReq = new stubs.request('/classes/messages', 'OPTIONS');
+
+    var postRes = new stubs.response();
+    var getRes = new stubs.response();
+    var optionsRes = new stubs.response();
+
+    handler.requestHandler(postReq, postRes);
+    handler.requestHandler(getReq, getRes);
+    handler.requestHandler(optionsReq, optionsRes);
+
+    expect(postRes._headers).to.include(handler.defaultCorsHeaders);
+    expect(getRes._headers).to.include(handler.defaultCorsHeaders);
+    expect(optionsRes._headers).to.include(handler.defaultCorsHeaders);
+  })
+});
+
 describe('Node Server Request Listener Function', function() {
   it('Should answer GET requests for /classes/messages with a 200 status code', function() {
     // This is a fake server request. Normally, the server would provide this,

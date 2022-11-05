@@ -28,6 +28,10 @@ var requestHandler = function(request, response) {
       messages.push(JSON.parse(chunk));
     });
     response.end();
+  } else if (request.url === '/classes/messages' && request.method === 'OPTIONS') {
+    headers['Accept'] = 'GET, POST, OPTIONS';
+    response.writeHead(200, headers);
+    response.end('Allow: GET, POST, OPTIONS');
   } else {
     response.writeHead(404);
     response.end('404 Page not found!');
@@ -51,3 +55,4 @@ var defaultCorsHeaders = {
 };
 
 module.exports.requestHandler = requestHandler;
+module.exports.defaultCorsHeaders = defaultCorsHeaders;
